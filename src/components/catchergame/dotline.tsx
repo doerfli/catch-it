@@ -14,9 +14,19 @@ export default function DotLine() {
     
     return (<Box>
         {[...Array(numberOfDots)].map((e, i: number) => {
-            const isActive = activeDot === i && (i < hideAfter || stopped);
-            const isTarget = target === i;
-            return (<Dot key={i} isActive={isActive} isTarget={isTarget} isStopped={stopped} />);
+            const isActiveDot = i === activeDot;
+            const isAlight = isActiveDot && i <= hideAfter;
+            const isTarget = i === target;
+            const isHit = stopped && isActiveDot && isTarget;
+            const isMissed = stopped && isActiveDot && !isTarget;
+            
+            return (<Dot 
+                key={i} 
+                isAlight={isAlight}
+                isTarget={isTarget}
+                isHit={isHit}
+                isMissed={isMissed}
+                />);
         })}
     </Box>);
 }

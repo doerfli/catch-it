@@ -4,23 +4,23 @@ import { Box, SvgIcon } from "@mui/material";
 import { SvgIconProps } from '@mui/material/SvgIcon';
 
 interface IDotProps {
-    isActive: boolean;
-    isTarget: boolean;
-    isStopped: boolean;
+    isAlight: boolean; // blue
+    isTarget: boolean; // orange
+    isHit: boolean; // green
+    isMissed: boolean; // red
 }
 
 export default function Dot(props: IDotProps) {
-    let color = props.isActive ? 'info' : 'white';
-
-    if (props.isTarget) {
-        color = 'warning';
-    }
-
-    if (props.isStopped && props.isTarget && props.isActive) {
-        color = 'success';
-    } else if (props.isStopped && props.isActive) {
+    let color = 'white';
+    if (props.isMissed) {
         color = 'error';
-    }
+    } else if (props.isHit) {
+        color = 'success';
+    } else if (props.isTarget) {
+        color = 'warning';
+    } else if (props.isAlight) {
+        color = 'info';
+    } 
 
 
     return (<Box sx={{ p: 0.1, display: 'inline' }}>
