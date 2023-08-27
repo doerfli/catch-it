@@ -5,13 +5,15 @@ export interface TransactionState {
     numberOfDots: number;
     activeDot: number;
     showActive: boolean;
+    started: boolean;
     stopped: boolean;
 }
 
 const initialState: TransactionState = {
     numberOfDots: 100,
-    activeDot: 0,
+    activeDot: -1,
     showActive: true,
+    started: false,
     stopped: false,
 }
 
@@ -34,8 +36,16 @@ export const dotsSlice = createSlice({
         hideActive: (state) => {
             state.showActive = false;
         },
-        stopped: (state) => {
+        start: (state) => {
+            state.started = true;
+        },
+        stop: (state) => {
             state.stopped = true;
+        },
+        reset: (state) => {
+            state.started = false;
+            state.stopped = false;
+            state.activeDot = -1;
         },
     },  
 });
@@ -47,7 +57,9 @@ export const {
     clearPositionActive,
     showActive,
     hideActive,
-    stopped,
+    start,
+    stop,
+    reset,
 } = dotsSlice.actions;
 
 export default dotsSlice.reducer;

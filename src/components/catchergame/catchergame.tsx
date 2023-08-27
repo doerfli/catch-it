@@ -1,24 +1,29 @@
-import { advanceActiveDot } from "@/redux/slices/dots";
+import { advanceActiveDot, reset, start, stop } from "@/redux/slices/dots";
+import { RootState } from "@/redux/store";
+import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Actions from "./actions";
 import DotLine from "./dotline";
-import { useDispatch } from "react-redux";
-import { Box, Button } from "@mui/material";
-import Stopper from "./stopper";
 
 export default function CatcherGame() {
     const dispatch = useDispatch();
     const timeout = 50;
     const [ intervalObj, setIntervalObj ] = useState<NodeJS.Timeout | null>(null);
+    const started = useSelector((state: RootState) => state.dots.started);
+    const stopped = useSelector((state: RootState) => state.dots.stopped);
     
     // call advanceActiveDot every 300 ms
     useEffect(() => {
-        const interval = setInterval(() => {
-            dispatch(advanceActiveDot());
-        }, timeout);
-        setIntervalObj(interval);
-        return () => clearInterval(interval);
+        if (started && !stopped) {
+            const interval = setInterval(() => {
+                dispatch(advanceActiveDot());
+            }, timeout);
+            setIntervalObj(interval);
+            return () => clearInterval(interval);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps -- only run once on page load
-    }, []);
+    }, [started, stopped]);
 
     // stop the interval when the component unmounts
     
@@ -26,11 +31,23 @@ export default function CatcherGame() {
     return (<>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <DotLine />
-            <Stopper onStop={() => {
-                if (intervalObj !== null) {
-                    clearInterval(intervalObj)
-                }
-            }}/>
+            <Actions 
+                started={started} 
+                stopped={stopped} 
+                onStart={() => {
+                    dispatch(start());
+                    dispatch(advanceActiveDot());
+                }}
+                onStop={() => {
+                    if (intervalObj !== null) {
+                        dispatch(stop());
+                        clearInterval(intervalObj)
+                    }
+                }} 
+                onReset={() => {
+                    dispatch(reset());
+                }}
+                />
         </Box>
     </>);
 }
