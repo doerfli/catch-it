@@ -12,6 +12,8 @@ export default function CatcherGame() {
     const [ intervalObj, setIntervalObj ] = useState<NodeJS.Timeout | null>(null);
     const started = useSelector((state: RootState) => state.dots.started);
     const stopped = useSelector((state: RootState) => state.dots.stopped);
+    const numberOfDots = useSelector((state: RootState) => state.dots.numberOfDots);
+    const activeDot = useSelector((state: RootState) => state.dots.activeDot);
     
     // call advanceActiveDot every 300 ms
     useEffect(() => {
@@ -26,6 +28,14 @@ export default function CatcherGame() {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps -- only run once on page load
     }, [started, stopped]);
+
+    useEffect(() => {
+        if (activeDot === numberOfDots - 1 && intervalObj !== null) {
+            dispatch(stop());
+            clearInterval(intervalObj);
+        }
+    }, [activeDot, numberOfDots, intervalObj, dispatch]);
+
 
     // stop the interval when the component unmounts
     
@@ -43,7 +53,7 @@ export default function CatcherGame() {
                 onStop={() => {
                     if (intervalObj !== null) {
                         dispatch(stop());
-                        clearInterval(intervalObj)
+                        clearInterval(intervalObj);
                     }
                 }} 
                 onReset={() => {
