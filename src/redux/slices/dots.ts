@@ -25,7 +25,11 @@ export const dotsSlice = createSlice({
             state.numberOfDots = action.payload;
         },
         advanceActiveDot: (state) => {
-            state.activeDot = (state.activeDot + 1) % state.numberOfDots;
+            if (state.activeDot < state.numberOfDots - 1) {
+                state.activeDot = (state.activeDot + 1) % state.numberOfDots;
+            } else {
+                state.stopped = true;
+            }
         },
         clearPositionActive: (state) => {
             state.activeDot = -1;

@@ -25,16 +25,11 @@ export default function CatcherGame() {
             }, timeout);
             setIntervalObj(interval);
             return () => clearInterval(interval);
+        } else if ( started && stopped && intervalObj !== null) {
+            clearInterval(intervalObj);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps -- only run once on page load
     }, [started, stopped]);
-
-    useEffect(() => {
-        if (activeDot === numberOfDots - 1 && intervalObj !== null) {
-            dispatch(stop());
-            clearInterval(intervalObj);
-        }
-    }, [activeDot, numberOfDots, intervalObj, dispatch]);
 
 
     // stop the interval when the component unmounts
