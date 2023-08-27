@@ -8,7 +8,7 @@ import DotLine from "./dotline";
 
 export default function CatcherGame() {
     const dispatch = useDispatch();
-    const timeout = 50;
+    const timeout = 70;
     const [ intervalObj, setIntervalObj ] = useState<NodeJS.Timeout | null>(null);
     const started = useSelector((state: RootState) => state.dots.started);
     const stopped = useSelector((state: RootState) => state.dots.stopped);
@@ -17,7 +17,9 @@ export default function CatcherGame() {
     useEffect(() => {
         if (started && !stopped) {
             const interval = setInterval(() => {
-                dispatch(advanceActiveDot());
+                if (! stopped) {
+                    dispatch(advanceActiveDot());
+                }
             }, timeout);
             setIntervalObj(interval);
             return () => clearInterval(interval);

@@ -8,14 +8,14 @@ import { Box } from "@mui/material";
 export default function DotLine() {
     const numberOfDots = useSelector((state: RootState) => state.dots.numberOfDots);
     const activeDot = useSelector((state: RootState) => state.dots.activeDot);
-    const dispatch = useDispatch();
-
-    
+    const stopped = useSelector((state: RootState) => state.dots.stopped);
+    const target = 85;
     
     return (<Box>
         {[...Array(numberOfDots)].map((e, i: number) => {
             const isActive = activeDot === i;
-            return (<Dot key={i} isActive={isActive} />);
+            const isTarget = target === i;
+            return (<Dot key={i} isActive={isActive} isTarget={isTarget} isStopped={stopped} />);
         })}
     </Box>);
 }
