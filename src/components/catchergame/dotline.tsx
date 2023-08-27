@@ -10,10 +10,11 @@ export default function DotLine() {
     const activeDot = useSelector((state: RootState) => state.dots.activeDot);
     const stopped = useSelector((state: RootState) => state.dots.stopped);
     const target = 85;
+    const hideAfter = useSelector((state: RootState) => state.dots.hideAfter);
     
     return (<Box>
         {[...Array(numberOfDots)].map((e, i: number) => {
-            const isActive = activeDot === i;
+            const isActive = activeDot === i && (i < hideAfter || stopped);
             const isTarget = target === i;
             return (<Dot key={i} isActive={isActive} isTarget={isTarget} isStopped={stopped} />);
         })}

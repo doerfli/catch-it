@@ -4,7 +4,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export interface TransactionState {
     numberOfDots: number;
     activeDot: number;
-    showActive: boolean;
+    hideAfter: number;
     started: boolean;
     stopped: boolean;
 }
@@ -12,7 +12,7 @@ export interface TransactionState {
 const initialState: TransactionState = {
     numberOfDots: 100,
     activeDot: -1,
-    showActive: true,
+    hideAfter: 60,
     started: false,
     stopped: false,
 }
@@ -30,17 +30,14 @@ export const dotsSlice = createSlice({
         clearPositionActive: (state) => {
             state.activeDot = -1;
         },
-        showActive: (state) => {
-            state.showActive = true;
-        },
-        hideActive: (state) => {
-            state.showActive = false;
-        },
         start: (state) => {
             state.started = true;
         },
         stop: (state) => {
             state.stopped = true;
+        },
+        hideAfter: (state, action: PayloadAction<number>) => {
+            state.hideAfter = action.payload;
         },
         reset: (state) => {
             state.started = false;
@@ -55,11 +52,10 @@ export const {
     setNumberOfDots,
     advanceActiveDot,
     clearPositionActive,
-    showActive,
-    hideActive,
     start,
     stop,
     reset,
+    hideAfter,
 } = dotsSlice.actions;
 
 export default dotsSlice.reducer;

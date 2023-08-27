@@ -10,7 +10,7 @@ interface IDotProps {
 }
 
 export default function Dot(props: IDotProps) {
-    let color = props.isActive ? 'primary' : 'white';
+    let color = props.isActive ? 'info' : 'white';
 
     if (props.isTarget) {
         color = 'warning';
