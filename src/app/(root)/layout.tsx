@@ -4,9 +4,7 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import { CssBaseline } from '@mui/material';
-import { Provider } from 'react-redux';
-import { store } from '@/redux/store';
+import { Container } from '@mui/material';
 import ProviderRegistry from './components/ProviderRegistry';
 
 export const metadata: Metadata = {
@@ -25,7 +23,9 @@ export default function RootLayout({
                 <meta name="viewport" content="initial-scale=1, width=device-width" />
             </head>
             <ProviderRegistry>
-                {children}
+                <Container maxWidth='xl' sx={{ p: 2 }}>
+                    {children}
+                </Container>
             </ProviderRegistry>
         </html>
     )

@@ -29,32 +29,32 @@ export default function CatcherGame() {
             clearInterval(intervalObj);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps -- only run once on page load
-    }, [started, stopped]);
-
-
-    // stop the interval when the component unmounts
-    
+    }, [started, stopped]);    
 
     return (<>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <DotLine />
-            <Actions 
-                started={started} 
-                stopped={stopped} 
-                onStart={() => {
-                    dispatch(start());
-                    dispatch(advanceActiveDot());
-                }}
-                onStop={() => {
-                    if (intervalObj !== null) {
-                        dispatch(stop());
-                        clearInterval(intervalObj);
-                    }
-                }} 
-                onReset={() => {
-                    dispatch(reset());
-                }}
-                />
+            <Box sx={{ display: 'flex', alignItems: 'center', mx: 'auto'}}>
+                <DotLine />
+            </Box>
+            <Box sx={{ p: 8 }}>
+                <Actions 
+                    started={started} 
+                    stopped={stopped} 
+                    onStart={() => {
+                        dispatch(start());
+                        dispatch(advanceActiveDot());
+                    }}
+                    onStop={() => {
+                        if (intervalObj !== null) {
+                            dispatch(stop());
+                            clearInterval(intervalObj);
+                        }
+                    }} 
+                    onReset={() => {
+                        dispatch(reset());
+                    }}
+                    />
+            </Box>
         </Box>
     </>);
 }

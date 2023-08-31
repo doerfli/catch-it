@@ -1,9 +1,7 @@
 import { RootState } from "@/redux/store";
-import { useDispatch, useSelector } from "react-redux";
-import Dot from "./dot";
-import { useEffect } from "react";
-import { advanceActiveDot } from "@/redux/slices/dots";
 import { Box } from "@mui/material";
+import { useSelector } from "react-redux";
+import Dot from "./dot";
 
 export default function DotLine() {
     const numberOfDots = useSelector((state: RootState) => state.dots.numberOfDots);
@@ -12,7 +10,7 @@ export default function DotLine() {
     const target = 85;
     const hideAfter = useSelector((state: RootState) => state.dots.hideAfter);
     
-    return (<Box>
+    return (<Box sx={{ display: 'flex', alignItems: 'center'}}>
         {[...Array(numberOfDots)].map((e, i: number) => {
             const isActiveDot = i === activeDot;
             const isAlight = isActiveDot && i <= hideAfter;
