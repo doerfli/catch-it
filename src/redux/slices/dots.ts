@@ -4,6 +4,8 @@ import { createSlice } from '@reduxjs/toolkit';
 export interface TransactionState {
     numberOfDots: number;
     activeDot: number;
+    minTimeout: number;
+    maxTimeout: number;
     hideAfter: number;
     started: boolean;
     stopped: boolean;
@@ -12,6 +14,8 @@ export interface TransactionState {
 const initialState: TransactionState = {
     numberOfDots: 100,
     activeDot: -1,
+    minTimeout: 70,
+    maxTimeout: 120,
     hideAfter: 60,
     started: false,
     stopped: false,

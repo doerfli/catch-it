@@ -11,9 +11,14 @@ export default function CatcherGame() {
     const [ intervalObj, setIntervalObj ] = useState<NodeJS.Timeout | null>(null);
     const started = useSelector((state: RootState) => state.dots.started);
     const stopped = useSelector((state: RootState) => state.dots.stopped);
+    const minTimeout = useSelector((state: RootState) => state.dots.minTimeout);
+    const maxTimeout = useSelector((state: RootState) => state.dots.maxTimeout);
     
     function timeout() {
-        return Math.floor((Math.random() * 50) + 70);
+        const diff = maxTimeout - minTimeout;
+        const speed = Math.floor((Math.random() * diff) + minTimeout);
+        console.log(`timeout: ${speed}`);
+        return speed;
     }
 
     // call advanceActiveDot every 300 ms
