@@ -70,7 +70,7 @@ export const dotsSlice = createSlice({
                     break;
                 case Difficulty.HARD:
                     state.minTimeout = 30;
-                    state.maxTimeout = 80;
+                    state.maxTimeout = 70;
                     state.hideAfter = 40;
                     break;
             }
