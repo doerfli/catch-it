@@ -1,3 +1,4 @@
+import { Difficulty } from '@/types/difficulty';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
@@ -9,6 +10,7 @@ export interface TransactionState {
     hideAfter: number;
     started: boolean;
     stopped: boolean;
+    difficulty: Difficulty;
 }
 
 const initialState: TransactionState = {
@@ -19,6 +21,7 @@ const initialState: TransactionState = {
     hideAfter: 60,
     started: false,
     stopped: false,
+    difficulty: Difficulty.EASY,
 }
 
 export const dotsSlice = createSlice({
@@ -52,6 +55,26 @@ export const dotsSlice = createSlice({
             state.stopped = false;
             state.activeDot = -1;
         },
+        setDifficulty: (state, action: PayloadAction<Difficulty>) => {
+            state.difficulty = action.payload;
+            switch (action.payload) {
+                case Difficulty.EASY:
+                    state.minTimeout = 70;
+                    state.maxTimeout = 120;
+                    state.hideAfter = 60;
+                    break;
+                case Difficulty.MEDIUM:
+                    state.minTimeout = 50;
+                    state.maxTimeout = 100;
+                    state.hideAfter = 50;
+                    break;
+                case Difficulty.HARD:
+                    state.minTimeout = 30;
+                    state.maxTimeout = 80;
+                    state.hideAfter = 40;
+                    break;
+            }
+        }
     },  
 });
 
@@ -64,6 +87,7 @@ export const {
     stop,
     reset,
     hideAfter,
+    setDifficulty,
 } = dotsSlice.actions;
 
 export default dotsSlice.reducer;

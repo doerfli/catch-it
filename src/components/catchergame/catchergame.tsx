@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Actions from "./actions";
 import DotLine from "./dotline";
+import Difficulties from "./difficulties";
 
 export default function CatcherGame() {
     const dispatch = useDispatch();
@@ -42,7 +43,7 @@ export default function CatcherGame() {
             <Box sx={{ display: 'flex', alignItems: 'center', mx: 'auto'}}>
                 <DotLine />
             </Box>
-            <Box sx={{ p: 8 }}>
+            <Box sx={{ p: 8, display: 'flex', flexDirection: 'column', gap: 4 }}>
                 <Actions 
                     started={started} 
                     stopped={stopped} 
@@ -60,6 +61,7 @@ export default function CatcherGame() {
                         dispatch(reset());
                     }}
                     />
+                <Difficulties />
             </Box>
         </Box>
     </>);
