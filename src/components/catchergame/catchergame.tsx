@@ -45,8 +45,6 @@ export default function CatcherGame() {
             </Box>
             <Box sx={{ p: 8, display: 'flex', flexDirection: 'column', gap: 4 }}>
                 <Actions 
-                    started={started} 
-                    stopped={stopped} 
                     onStart={() => {
                         dispatch(start());
                         dispatch(advanceActiveDot());

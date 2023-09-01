@@ -1,18 +1,21 @@
+import { RootState } from "@/redux/store";
 import { faBackwardFast, faCircleStop, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, SvgIcon } from "@mui/material";
+import { useSelector } from "react-redux";
 
 interface ActionsProps {
-    started: boolean;
-    stopped: boolean;
     onStart: () => void;
     onStop: () => void;
     onReset: () => void;
 }
 
 export default function Actions(props: ActionsProps) {
+    const started = useSelector((state: RootState) => state.dots.started);
+    const stopped = useSelector((state: RootState) => state.dots.stopped);
+    
     return <>
-        {! props.started && 
+        {! started && 
             <Button 
                 variant="contained" 
                 fullWidth
@@ -24,7 +27,7 @@ export default function Actions(props: ActionsProps) {
                     <FontAwesomeIcon icon={ faPlay } />
                 </SvgIcon>
             </Button>}
-        {props.started && ! props.stopped && 
+        {started && ! stopped && 
             <Button 
                 variant="contained" 
                 fullWidth
@@ -36,7 +39,7 @@ export default function Actions(props: ActionsProps) {
                     <FontAwesomeIcon icon={ faCircleStop } />
                 </SvgIcon>
             </Button>}
-        {props.stopped && 
+        {stopped && 
             <Button 
                 variant="contained" 
                 fullWidth
